@@ -62,10 +62,15 @@ for i in range(guesses):
     guess_col = int(input("Guess Col:")) - 1
 
     if (guess_row, guess_col) in ships_list: #correct guess
-        print("Congratulations! You sank a battleship!")
-        if i != guesses - 1:
+        if board[guess_row][guess_col] == "*": #have we guessed this correctly already
+            print("Already sunk.")
+        else:
+            print("Congratulations! You sank a battleship!")
             board[guess_row][guess_col] = "*"
             print_board(board)
+            if sum(i.count("*") for i in board) == battleships:
+                print("You Win!!")
+                break
     else:
         if guess_row not in range(grid_size) or guess_col not in range(grid_size): #guess not on the board
             print("Oops, that\'s not even in the ocean.")
@@ -82,7 +87,7 @@ for i in range(guesses):
         print("The answer is:")
         print_board(answer_board)
         
-
+        
 
 '''You can also add on to your Battleship! program to make it more complex and fun to play. Here are some ideas for enhancements—maybe you can think of some more!
 
