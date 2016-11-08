@@ -56,11 +56,10 @@ for i in range(guesses):
     guess_col = int(input("Guess Col:")) - 1
 
     if (guess_row, guess_col) in ships_list: #correct guess
+        print("Congratulations! You sank a battleship!")
         if i == guesses - 1: #if out of guesses then go to game over
-            print("Congratulations! You sank a battleship!")
             break
         else:
-            print("Congratulations! You sank a battleship!")
             board[guess_row][guess_col] = "*"
             print_board(board)
     else:
