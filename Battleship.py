@@ -1,23 +1,27 @@
-#battleship game
+#Battleship game
 
 from random import randint
 
 #empty board
 board = []
+#set up a board to display the answer
+answer_board = []
 #set column and row size (square)
 grid_size = 8
+#set number of battleships
+battleships = 3
+#set up list of co-ordinates for ships
+ships_list = []
 
 #create a grid
-for i in range(0, grid_size):
-    board.append(["O"] * grid_size)
+def create_grid(board):
+    for i in range(0, grid_size):
+        board.append(["O"] * grid_size)
 
 #print the grid
 def print_board(board):
     for row in board:
         print(" ".join(row))
-
-print("Let's play Battleship")
-print_board(board)
 
 #select random row and column for ship to be in
 def random_row(board):
@@ -26,12 +30,10 @@ def random_row(board):
 def random_col(board):
     return randint(0, len(board[0]) - 1)
 
-#create the battleships
-#set number of battleships
-battleships = 5
-#set up list of co-ordinates for ships
-ships_list = []
-# set location of ships
+create_grid(board)
+create_grid(answer_board)
+
+#Create the battleships and set location of ships
 for i in range(battleships):
     #how many ships have been created
     number_of_ships = len(ships_list)
@@ -41,10 +43,14 @@ for i in range(battleships):
         ship_col = random_col(board)
         if (ship_row, ship_col) not in ships_list:
             ships_list.append((ship_row, ship_col))
+            answer_board[ship_row][ship_col] = "S"
             break
 
 #print ships_list for debugging
 print(ships_list)
+
+print("Let's play Battleship")
+print_board(board)
 
 #playing the game - input row and column, set number of guesses allowed
 guesses = 4
@@ -57,9 +63,7 @@ for i in range(guesses):
 
     if (guess_row, guess_col) in ships_list: #correct guess
         print("Congratulations! You sank a battleship!")
-        if i == guesses - 1: #if out of guesses then go to game over
-            break
-        else:
+        if i != guesses - 1:
             board[guess_row][guess_col] = "*"
             print_board(board)
     else:
@@ -72,13 +76,12 @@ for i in range(guesses):
             board[guess_row][guess_col] = "X"
             print_board(board)
 
-    #checks if user out of guesses
+    #checks if user out of guesses and if so displays the answer
     if i == guesses - 1:
-        #ship_location = "The answer is row " + str(ship_row) + ", column " + str(ship_col) 
-        print("The answer is:")
-        print(ships_list)
-        print_board(board)
         print("Game Over")
+        print("The answer is:")
+        print_board(answer_board)
+        
 
 
 '''You can also add on to your Battleship! program to make it more complex and fun to play. Here are some ideas for enhancements—maybe you can think of some more!
