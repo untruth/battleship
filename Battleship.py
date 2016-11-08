@@ -47,7 +47,7 @@ for i in range(battleships):
             break
 
 #print ships_list for debugging
-print(ships_list)
+#print(ships_list)
 
 print("Let's play Battleship")
 print_board(board)
@@ -58,8 +58,15 @@ for i in range(guesses):
     #make a guess
     print("Turn", i + 1)
     #the -1 is to take account of the user input starting at 1 not 0
-    guess_row = int(input("Guess Row:")) - 1
-    guess_col = int(input("Guess Col:")) - 1
+    #ensure that only integers are input
+    while True:
+        try:
+            guess_row = int(input("Guess Row:")) - 1
+            guess_col = int(input("Guess Col:")) - 1
+        except ValueError:
+            print("That was not a number.")
+            continue
+        break
 
     if (guess_row, guess_col) in ships_list: #correct guess
         if board[guess_row][guess_col] == "*": #have we guessed this correctly already
